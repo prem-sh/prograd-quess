@@ -87,19 +87,19 @@ ___
 - Create GitHub account
 - Push all completed tasks to github repo
 
-24 Write a Java program for Company Insurance Policy. 
+24 Write a Java program for Company Insurance Policy. [(file link)](https://github.com/prem-sh/prograd-quess/blob/master/src/Q24_InsurancePolicy.java)
 > A company insure its driver under the following conditions
 > If driver is married
 > If driver is unmarried male and age above 30
 > If driver is unmarried female and age above 25
 
-25 Write a Java program for bonus calculation.
+25 Write a Java program for bonus calculation. [(file link)](https://github.com/prem-sh/prograd-quess/blob/master/src/Q25_BonusCalculation.java)
 > Accept basic salary from user.
 > Calculate TA = 10%, DA= 15%,HRA = 20%, PF= 12% of basic salary.
 > If basic >= 20,000 then give 10% bonus otherwise give 20% bonus on basic salary.
 > Calculate his gross (final) salary ( gross salary = Basic + DA + TA + HRA + Bonus – PF) 
 
-26 Write a program to input electricity unit charge and calculate the total electricity bill according to the given condition:
+26 Write a program to input electricity unit charge and calculate the total electricity bill according to the given condition [(file link)](https://github.com/prem-sh/prograd-quess/blob/master/src/Q26_ElectricityCharge.java)
 > For first 50 units Rs. 0.50/unit
 > For next 100 units Rs. 0.75/unit
 > For next 100 units Rs. 1.20/unit
