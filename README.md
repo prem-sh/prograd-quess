@@ -6,19 +6,19 @@ ___
 
 #### Task list
 
-1 Sum of Numbers Between given Range
+1 Sum of Numbers Between given Range [(file link)](https://github.com/prem-sh/prograd-quess/blob/master/src/Q1_SumOfNumbers.java)
 > https://www.codewars.com/kata/55f2b110f61eb01779000053/train/cpp
 
-2 Count the number of divisors
+2 Count the number of divisors [(file link)](https://github.com/prem-sh/prograd-quess/blob/master/src/Q2_CountDivisors.java)
 > https://www.codewars.com/kata/542c0f198e077084c0000c2e/train/java
 
-3 Sum of Digits / Digital root
+3 Sum of Digits / Digital root[(file link)](https://github.com/prem-sh/prograd-quess/blob/master/src/Q3_SumDigitalRoots.java)
 > https://www.codewars.com/kata/541c8630095125aba6000c00/train/java
 
-4 Sum of Cubes
+4 Sum of Cubes [(file link)](https://github.com/prem-sh/prograd-quess/blob/master/src/Q4_SumCubes.java)
 > https://www.codewars.com/kata/59a8570b570190d313000037/train/java
 
-5 Who likes it ?
+5 Who likes it ? [(file link)](https://github.com/prem-sh/prograd-quess/blob/master/src/Q5_WhoLikes.java)
 > https://www.codewars.com/kata/5266876b8f4bf2da9b000362/train/java
 
 6 Replace digits with 0 and 1Given a string of digits [(file link)](https://github.com/prem-sh/prograd-quess/blob/master/src/Q6_StringReplace1.java)
@@ -27,13 +27,13 @@ ___
 7 Palidrome Number [(file link)](https://github.com/prem-sh/prograd-quess/blob/master/src/Q7_MrLalwani.java)
 > Mr. Lalwani having Some Currency. The currency having number as Palidrome gets 3 times more than the currency. So help out Mr. Lalwani to check which currency going to give him 3 times return.
 
-8 Validate PIN Code
+8 Validate PIN Code [(file link)](https://github.com/prem-sh/prograd-quess/blob/master/src/Q8_ValidatePin.java)
 > https://www.codewars.com/kata/55f8a9c06c018a0d6e000132/train/java
 
-9 Find Missing Letter
+9 Find Missing Letter [(file link)](https://github.com/prem-sh/prograd-quess/blob/master/src/Q9_MissingLetter.java)
 > https://www.codewars.com/kata/5839edaa6754d6fec10000a2/train/java
 
-10 Replace vowels
+10 Replace vowels [(file link)](https://github.com/prem-sh/prograd-quess/blob/master/src/Q10_ReplaceVowels.java)
 > https://www.codewars.com/kata/52fba66badcd10859f00097e/train/java
 
 11 Number is Prime or not [(file link)](https://github.com/prem-sh/prograd-quess/blob/master/src/Q11_PrimeOrNot.java)
