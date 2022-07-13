@@ -92,3 +92,16 @@ ___
 > If driver is married
 > If driver is unmarried male and age above 30
 > If driver is unmarried female and age above 25
+
+25 Write a Java program for bonus calculation.
+> Accept basic salary from user.
+> Calculate TA = 10%, DA= 15%,HRA = 20%, PF= 12% of basic salary.
+> If basic >= 20,000 then give 10% bonus otherwise give 20% bonus on basic salary.
+> Calculate his gross (final) salary ( gross salary = Basic + DA + TA + HRA + Bonus – PF) 
+
+26 Write a program to input electricity unit charge and calculate the total electricity bill according to the given condition:
+> For first 50 units Rs. 0.50/unit
+> For next 100 units Rs. 0.75/unit
+> For next 100 units Rs. 1.20/unit
+> For unit above 250 Rs. 1.50/unit
+> An additional surcharge of 20% is added to the bill.
