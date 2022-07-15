@@ -105,3 +105,16 @@ ___
 > For next 100 units Rs. 1.20/unit
 > For unit above 250 Rs. 1.50/unit
 > An additional surcharge of 20% is added to the bill.
+
+27 Find the table of given number using recursion [(file link)](https://github.com/prem-sh/prograd-quess/blob/master/src/Q27_RecursionTable.java.java)
+
+28 Find the sum of 1 to n numbers using recursion [(file link)](https://github.com/prem-sh/prograd-quess/blob/master/src/Q28_SumRange.java.java)
+
+29 Pattern 1 [(file link)](https://github.com/prem-sh/prograd-quess/blob/master/src/Q28_SumRange.java.java)
+
+>Write a Java program to print following alphabet pattern
+>A B C D E
+>B C D E
+>C D E
+>D E
+>E
