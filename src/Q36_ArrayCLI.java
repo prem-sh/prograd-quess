@@ -2,6 +2,8 @@
 // insert, delete, search, display and exit
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Q36_ArrayCLI {
@@ -9,8 +11,8 @@ public class Q36_ArrayCLI {
     public static void main(String[] args) {
         AbstractArray arrayStack[] = new AbstractArray[10]; // hosts arrays
         String arrayNames[] = new String[10]; // arrays names
-
         CommandEngine cmd = new CommandEngine(arrayStack, arrayNames);  // commands handler
+        System.out.println("Use 'help' command to explore");
         System.out.print(" >> ");
         boolean exit = false;
         do {  // command loop
@@ -35,70 +37,164 @@ class CommandEngine{
     private int selected = -1;
     private int top = -1;
     private String help = """ 
-        ====== General commands ======
+        ===================== General commands =======================
         
         -> help
+        -> help <command>
         -> create <array-name> <Type char or int or long or float or double or string>
         -> delete <array-name>
         -> checkout <array-name>
         -> exit
         
-        ====== Array operations ======
+        ===================== Array operations =======================
         
-        -> insert <value> <position>
-        -> remove <value>
-        -> remove -p <position>
-        -> pop
-        -> push
-        -> enqueue
-        -> dequeue
-        -> length
-        -> sort
-        -> sort <direction>
-        -> sort <from> <direction>
-        -> sort <from> <to> <direction>
-        -> find <value>
+        -> insert <value> <position>                  -> length
+        
+        -> remove <value>                             -> sort
+        -> remove -p <position>                       -> sort <direction>
+                                                      -> sort <from> <direction>
+        -> pop                                        -> sort <from> <to> <direction>
+        -> push        
+        -> enque                                      -> find <value>
+        -> deque
+        
         -> show
         -> show *
         -> show <array-name> 
+        
+        NOTES : 
+        i ) <form> and <to> are position (1..n) not index (0..n), 
+            and it can be negative to represent position from last.
+            EXAMPLE : remove -p -1 #removes last element from array.
+            
+        ii) <direction> must be -1 (decending) or 1 (ascending). 
+        
+        iii) use 'help <command>' to learn about individual commands.
+        ==============================================================
 """;
 
     private final String showHelp = """
-        show
-        show *
-        show <array-name>
+        
+        show               # Displays currently selected array  
+        show *             # Displays all available array  
+        show <array-name>  # Displays mentioned array | useful for lookup 
+                           |_ another array while being on other array
+        
+        INFO : 
+        Show can be used to view the array.
 """;
     private final String findHelp = """
+        
         find <value>
+        
+        INFO:
+        This command is useful for lookup the position of the element passed.
 """;
     private final String sortHelp = """
+        
         sort
         sort <direction>
         sort <from> <direction>
         sort <from> <to> <direction>
+        
+        Example:
+        
+        let, arr[1,2,3,4,5,6,7]
+        sort -1       >>>--> arr[7,6,5,4,3,2,1]
+        sort 3 -2 1   >>>--> arr[7,(2,3,4,5,6),1]
+        sort -2 1     >>>--> arr[7,2,3,4,5,(1,6)]
+        sort          >>>--> arr[1,2,3,4,5,6,7]
+        
+        INFO :
+        <direction> takes 1 or -1, 
+             -1 - DESCENDING ORDER
+              1 - ASCENDING ORDER
+        <from> and <to> are positions (not indexes) which can be 
+        either positive or negative integers.
 """;
     private final String removeHelp = """
-        remove <value>
-        remove -p <position>
+        
+        remove <value>         # Remove by value
+        remove -p <position>   # Remove by position
+        
+        INFO :
+        'remove' command is used to remove an element from array.
 """;
     private final String insertHelp = """
-        insert <value> <position>
-        insert <value> 
+        
+        insert <value> <position>   # Insert at defined position
+        insert <value>              # Insert at last position
+        
+        INFO:
+        'insert' command is used to insert values into currently selected array.
 """;
     private final String checkoutHelp = """
+       
        checkout <array-name>
+       
+       INFO :
+       'checkout' command is used to switch between different arrays.
+       Normally command pointer will be like ' >> ' when no array is selected and
+       command pointer will be like 'arrayName (type) >> ' when array is selected.
 """;
     private final String deleteHelp = """
+       
        delete <array-name>
+       
+       INFO :
+       Array name followed by 'delete' command will be removed from array slot remains with one empty slot.
 """;
     private final String createHelp = """
-       create <array-name>  // default is int
+       
+       create <array-name> <type>
+       
+       Examples: 
+       create <array-name> #default type is taken as int
        create <array-name> char 
        create <array-name> int 
        create <array-name> long
        create <array-name> float
        create <array-name> double
        create <array-name> string
+       
+       INFO :
+       The arrays are created using this command, if type is not provided it will be taken as int array.
+       There are only 10 array slots provided, Which means you can only create and maintain 10 arrays.
+""";
+    private final String pushHelp = """
+       
+       push <element>
+
+       INFO :
+       It inserts the given element at the end of the list.
+""";
+    private final String popHelp = """
+       
+       pop
+
+       INFO :
+       It removes the last element from the list and prints the element.
+""";
+    private final String enqueHelp = """
+       
+       enque <element>
+
+       INFO :
+       It inserts the given element in the beginning of the list.
+""";
+    private final String dequeHelp = """
+       
+       deque
+
+       INFO :
+       It removes the last element from the list and prints the element.
+""";
+    private final String lengthHelp = """
+       
+       length
+
+       INFO :
+       It shows the number of elements in the array.
 """;
 
 
@@ -115,41 +211,75 @@ class CommandEngine{
                 if (commandLets.length > 1){
                     switch (commandLets[1]){
                         case "exit":
-                            System.out.println("\n\t\t ===== HELP(exit) =====");
+                            System.out.println("\n\t\t===== HELP(exit) =====");
                             System.out.println("\t\tExits the application");
+                            System.out.println("\n\t\t======================");
                             break;
                         case "create":
-                            System.out.println("\n\t\t ===== HELP(create) =====");
+                            System.out.println("\n\t\t===== HELP(create) =====");
                             System.out.println(createHelp);
+                            System.out.println("\n\t\t======================");
                             break;
                         case "delete":
-                            System.out.println("\n\t\t ===== HELP(delete) =====");
+                            System.out.println("\n\t\t===== HELP(delete) =====");
                             System.out.println(deleteHelp);
+                            System.out.println("\n\t\t======================");
                             break;
                         case "checkout":
-                            System.out.println("\n\t\t ===== HELP(checkout) =====");
+                            System.out.println("\n\t\t===== HELP(checkout) =====");
                             System.out.println(checkoutHelp);
+                            System.out.println("\n\t\t======================");
                             break;
 
                         case "insert":
-                            System.out.println("\n\t\t ===== HELP(insert) =====");
+                            System.out.println("\n\t\t===== HELP(insert) =====");
                             System.out.println(insertHelp);
+                            System.out.println("\n\t\t======================");
                             break;
                         case "remove":
-                            System.out.println("\n\t\t ===== HELP(remove) =====");
+                            System.out.println("\n\t\t===== HELP(remove) =====");
                             System.out.println(removeHelp);
+                            System.out.println("\n\t\t======================");
                             break;
                         case "sort":
-                            System.out.println("\n\t\t ===== HELP(sort) =====");
+                            System.out.println("\n\t\t===== HELP(sort) =====");
                             System.out.println(sortHelp);
+                            System.out.println("\n\t\t======================");
                             break;
                         case "find":
-                            System.out.println("\n\t\t ===== HELP(find) =====");
+                            System.out.println("\n\t\t===== HELP(find) =====");
                             System.out.println(findHelp);
+                            System.out.println("\n\t\t======================");
                             break;
                         case "show":
-                            System.out.println("\n\t\t ===== HELP(show) =====");
+                            System.out.println("\n\t\t===== HELP(show) =====");
                             System.out.println(showHelp);
+                            System.out.println("\n\t\t======================");
+                            break;
+                        case "push":
+                            System.out.println("\n\t\t===== HELP(push) =====");
+                            System.out.println(pushHelp);
+                            System.out.println("\n\t\t======================");
+                            break;
+                        case "pop":
+                            System.out.println("\n\t\t===== HELP(pop) =====");
+                            System.out.println(popHelp);
+                            System.out.println("\n\t\t======================");
+                            break;
+                        case "enque":
+                            System.out.println("\n\t\t===== HELP(enque) =====");
+                            System.out.println(enqueHelp);
+                            System.out.println("\n\t\t======================");
+                            break;
+                        case "deque":
+                            System.out.println("\n\t\t===== HELP(deque) =====");
+                            System.out.println(dequeHelp);
+                            System.out.println("\n\t\t======================");
+                            break;
+                        case "length":
+                            System.out.println("\n\t\t===== HELP(length) =====");
+                            System.out.println(lengthHelp);
+                            System.out.println("\n\t\t======================");
                             break;
                     }
                 }else System.out.println(help);
@@ -157,6 +287,10 @@ class CommandEngine{
             }
             case "create":
             {
+                if (top == arrayNames.length-1) {
+                    System.out.println("Cannot maintain more than 10 arrays, Array slot full");
+                    break ;
+                }
                 if(commandLets.length > 1){
                     String arrayName = commandLets[1];
 
@@ -197,6 +331,10 @@ class CommandEngine{
             }
             case "delete":
             {
+                if(top < 0){
+                    System.out.println("Array slot empty");
+                    break;
+                }
                 if (commandLets.length > 1){
                     String arrayName = commandLets[1];
                     boolean notFound = true;
@@ -247,14 +385,14 @@ class CommandEngine{
                         while (arrayNames[++i] != null) System.out.print(arrayNames[i]+" ");
                         System.out.print("]\n");
                     }else {
-                        System.out.println("Please enter array name after checkout command | currently no arrays in stack");
+                        System.out.println("Please enter array name after checkout command | currently no arrays in stack | create new array using 'create' command use 'help create' to learn");
                     }
                 }
                 break;
             }
             case "show":
             {
-                if (selected == -1) {
+                if (selected < 0) {
                     System.out.println("please use checkout command to select an array");
                     break ;
                 }
@@ -286,12 +424,19 @@ class CommandEngine{
             }
             case "length":
             {
-                if (selected < 0)
+                if (selected < 0) {
+                    System.out.println("please use checkout command to select an array");
+                    break ;
+                }
                 System.out.println("Length of "+arrayNames[selected]+" is "+arrayStack[selected].length());
                 break;
             }
             case "insert":
             {
+                if (selected < 0) {
+                    System.out.println("please use checkout command to select an array");
+                    break ;
+                }
                 if(commandLets.length > 1){
                     String type = arrayStack[selected].getType();
                     commandLets[1] = commandLets[1].trim();
@@ -337,6 +482,10 @@ class CommandEngine{
             }
             case "remove":
             {
+                if (selected < 0) {
+                    System.out.println("please use checkout command to select an array");
+                    break ;
+                }
                 if(commandLets.length > 1){
                     String type = arrayStack[selected].getType();
                     commandLets[1] = commandLets[1].trim();
@@ -347,7 +496,7 @@ class CommandEngine{
                             try{
                                 pos = Integer.parseInt(commandLets[2]);
                             }catch (NumberFormatException e){
-                                System.out.println("ERROR : index must be integer");
+                                System.out.println("ERROR : position must be an integer");
                             }
                         }else {
                             System.out.println("ERROR : please enter position argument");
@@ -413,7 +562,7 @@ class CommandEngine{
             }
             case "find":
             {
-                if (selected == -1) {
+                if (selected < 0) {
                     System.out.println("please use checkout command to select an array");
                     break ;
                 }
@@ -454,16 +603,20 @@ class CommandEngine{
                                 pos = arrayStack[selected].search(start, end, commandLets[1]);
                                 break;
                         }
-                        System.out.println("Element found at postion "+pos);
+                        if(pos == 0){
+                            System.out.println("Element not found in the array");
+                            break;
+                        }
+                        System.out.println("Element found at position "+pos);
                     }catch (NumberFormatException e){
                         System.out.println("TYPE ERROR : Please use valid type of elements");
                     }
-                }else System.out.println("ERROR : Should provide search element after indexof");
+                }else System.out.println("ERROR : Should provide search element after 'find' command");
                 break;
             }
             case "sort":
             {
-                if (selected == -1) {
+                if (selected < 0) {
                     System.out.println("please use checkout command to select an array");
                     break ;
                 }
@@ -480,7 +633,11 @@ class CommandEngine{
                     } else if (commandLets.length == 3) {
                         try {
                             int startInp = Integer.parseInt(commandLets[1]);
-                            if(startInp < 0){start = arrayStack[selected].length()+2-startInp;}else end = startInp;
+                            if(startInp < 0){
+                                start = arrayStack[selected].length()+startInp+1;
+                                System.out.println("?"+startInp+"1=>"+start);
+                            }
+                            else start = startInp;
                             direction = Integer.parseInt(commandLets[2]);
                         }catch (NumberFormatException e) {
                             System.out.println("ERROR : Enter valid args ");
@@ -488,9 +645,15 @@ class CommandEngine{
                     } else if (commandLets.length > 3) {
                         try {
                             int startInp = Integer.parseInt(commandLets[1]);
-                            int endInp = Integer.parseInt(commandLets[2]);
-                            if(startInp < 0){start = arrayStack[selected].length()+2-startInp;}else start = startInp;
-                            if(endInp < 0){end = arrayStack[selected].length()+2-endInp;}else end = endInp;
+                            int endInp = Integer.parseInt(commandLets[2])+1;
+                            if(startInp < 0){
+                                start = arrayStack[selected].length()+startInp+1;
+                                System.out.println("?"+startInp+"->"+start);
+                            }else start = startInp;
+                            if(endInp < 0){
+                                end = arrayStack[selected].length()+endInp+1;;
+                                System.out.println("?"+endInp+"->"+end);
+                            }else end = endInp;
                             direction = Integer.parseInt(commandLets[3]);
                         }catch (NumberFormatException e) {
                             System.out.println("ERROR : Enter valid args ");
@@ -505,14 +668,15 @@ class CommandEngine{
                 break;
             }
             case "pop":
-                if (selected == -1) {
+                if (selected < 0) {
                     System.out.println("please use checkout command to select an array");
                     break ;
                 }
-                arrayStack[selected].remove(-1);
+                String poped = arrayStack[selected].remove(-1);
+                System.out.println(poped);
                 break ;
             case "push":
-                if (selected == -1) {
+                if (selected < 0) {
                     System.out.println("please use checkout command to select an array");
                     break ;
                 }
@@ -550,8 +714,8 @@ class CommandEngine{
                     System.out.println("ERROR : No elements to insert");
                 }
                 break ;
-            case "enqueue":
-                if (selected == -1) {
+            case "enque":
+                if (selected < 0) {
                     System.out.println("please use checkout command to select an array");
                     break ;
                 }
@@ -589,8 +753,8 @@ class CommandEngine{
                     System.out.println("ERROR : No elements to insert");
                 }
                 break ;
-            case "dequeue":
-                if (selected == -1) {
+            case "deque":
+                if (selected < 0) {
                     System.out.println("please use checkout command to select an array");
                     break ;
                 }
@@ -676,18 +840,26 @@ class AbstractArray<T> {
         return 0;
     }
 
-    public int remove(int position){ // Returns inserted index as return value
+    public String remove(int position){ // Returns inserted index as return value
+        String temp = "Array Empty";
         if (position == 0){
             System.out.println("ERROR : Position argument cannot be zero for remove | It should be positive or negative numbers");
+        }
+        if(top < 0){
+            return temp;
         }
         if (position <= top+1){
             if (position < 1){
                 position = top+1+position; //Insert reverse;
+                if(position < 0){
+                    return temp;
+                }
             }else {
                 position--; // index conversion;
             }
 
             //remove element at position
+            temp = array[position].toString();
             array[position] = null;
             while (position < top){
                 position++;
@@ -701,16 +873,19 @@ class AbstractArray<T> {
             position = -1;
         }
 
-        return 0;
+        return temp;
     }
 
     public int search(int startPosition,int endPosition, T element){
+        if(this.top < 0){
+            return 0; // means array is empty
+        }
         if (startPosition < 1){
             System.out.println("ERROR : Position argument should be more than 1");
         }
         if (endPosition <= top+1){
             if (endPosition < 1){
-                endPosition = top+1+endPosition;
+                endPosition = top+1+endPosition; // inversion
             }else {
                 endPosition--;
             }
@@ -784,20 +959,19 @@ class AbstractArray<T> {
             return ((Integer) m > (Integer) n);
         }else if(m instanceof Long){
             return ((Long) m > (Long) n);
+        } else if (m instanceof Character) {
+            return ( (char) m > (char)n);
         }
         return false;
     }
 
     public void display(){ // Returns inserted index as return value
-        String result = "[ ";
-        int i=0;
-        while (array[i] != null) {
-            result += array[i].toString() + " ";
-            i++;
-            if(i > top) break;
-        }
-        result+="]"+"("+this.length()+"/"+this.size()+")";
-        System.out.println(result);
+        String result = "";
+        if (top<0) result = "Empty Array";
+        else result = Arrays.toString(Arrays.stream(array)
+                .filter(Objects::nonNull)
+                .toArray());
+        System.out.println(result+"("+this.length()+"/"+this.size()+")");
     }
 
     public String getType() {
@@ -806,12 +980,7 @@ class AbstractArray<T> {
 
     @Override
     public String toString(){
-        String result = "[ ";
-        int i=0;
-        for (T a: array) {
-            if(a!=null)result += a+" ";
-        }
-        result+="]"+"("+this.length()+"/"+this.size()+")";
-        return result;
+        if (top<0) return "Empty Array";
+        return Arrays.toString(array);
     }
 }

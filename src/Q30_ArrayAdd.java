@@ -13,13 +13,13 @@ public class Q30_ArrayAdd {
         for (int i = 0; i<n; i++) {
             System.out.print(arr[i]+" ");
             sum += arr[i];
-        };
+        }
         System.out.print("is "+sum);
 
         System.out.print("\nAvg of ");
         for (int i = 0; i<n; i++) {
             System.out.print(arr[i]+" ");
-        };
+        }
         System.out.print("is "+(double)sum/arr.length);
     }
 }
