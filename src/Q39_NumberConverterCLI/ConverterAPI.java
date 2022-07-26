@@ -2,7 +2,7 @@ package Q39_NumberConverterCLI;
 
 import Q39_NumberConverterCLI.exceptions.*;
 
-public class converterAPI{
+public class ConverterAPI {
     //Constants
     public static final String BIN = "Binary";
     public static final String OCT = "Octal";
@@ -150,6 +150,7 @@ public class converterAPI{
         else if (input.startsWith("0x")) return HEX;
         else return DEC;
     }
+
     private static boolean validate(String input) throws InvalidNumberFormatException {
         String charSet = "";
         if(input.startsWith("0b")) charSet = "01";

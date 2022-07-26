@@ -3,34 +3,35 @@ package Q39_NumberConverterCLI;
 import Q39_NumberConverterCLI.exceptions.MenuException;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
     // Color constants
-    public static final String RESET = "\u001B[0m";
-    public static final String RED = "\033[0;91m";
-    public static final String GREEN = "\033[0;92m";
-    public static final String YELLOW = "\033[0;93m";
-    public static final String BLUE = "\033[0;96m";
-    public static final String PURPLE = "\033[0;95m";
-    public static final String CYAN = "\033[1;96m";     //High intensity
-    public static final String WHITE = "\033[1;97m";    //High intensity
+    private static final String RESET = "\u001B[0m";
+    private static final String RED = "\033[0;91m";
+    private static final String GREEN = "\033[0;92m";
+    private static final String YELLOW = "\033[0;93m";
+    private static final String BLUE = "\033[0;96m";
+    private static final String PURPLE = "\033[0;95m";
+    private static final String CYAN = "\033[1;96m";     //High intensity
+    private static final String WHITE = "\033[1;97m";    //High intensity
 
-    public static final String RED_BACKGROUND = "\u001B[41m";
-    public static final String YELLOW_BACKGROUND = "\u001B[43m";
-    public static final String BLUE_BACKGROUND = "\u001B[44m";
+    private static final String RED_BACKGROUND = "\u001B[41m";
+    private static final String YELLOW_BACKGROUND = "\u001B[43m";
+    private static final String BLUE_BACKGROUND = "\u001B[44m";
 
-    public static final String DEC_COLOR = BLUE;
-    public static final String BIN_COLOR = GREEN;
-    public static final String OCT_COLOR = PURPLE;
-    public static final String HEX_COLOR = YELLOW;
-    public static final String CUR_COLOR = CYAN;
+    private static final String DEC_COLOR = BLUE;
+    private static final String BIN_COLOR = GREEN;
+    private static final String OCT_COLOR = PURPLE;
+    private static final String HEX_COLOR = YELLOW;
+    private static final String CUR_COLOR = CYAN;
 
     //Constants
-    public static final String BIN = converterAPI.BIN;
-    public static final String OCT = converterAPI.OCT;
-    public static final String DEC = converterAPI.DEC;
-    public static final String HEX = converterAPI.HEX;
+    public static final String BIN = ConverterAPI.BIN;
+    public static final String OCT = ConverterAPI.OCT;
+    public static final String DEC = ConverterAPI.DEC;
+    public static final String HEX = ConverterAPI.HEX;
 
     //Scanner
     private Scanner sc = new Scanner(System.in);
@@ -140,19 +141,19 @@ public class Main {
         String operand = commands[0];
 
         if(operand.startsWith("0b")){
-            if (convertTo == BIN) convertTo = convertFrom;
+            if (Objects.equals(convertTo, BIN)) convertTo = convertFrom;
             convertFrom = BIN;
         } else if (operand.startsWith("0o")) {
-            if (convertTo == OCT) convertTo = convertFrom;
+            if (Objects.equals(convertTo, OCT)) convertTo = convertFrom;
             convertFrom = OCT;
         } else if (operand.startsWith("0x")) {
-            if (convertTo == HEX) convertTo = convertFrom;
+            if (Objects.equals(convertTo, HEX)) convertTo = convertFrom;
             convertFrom = HEX;
         } else {
             operand = signNumber(operand,convertFrom);
         }
 
-        System.out.println("\t\t\t\t\t"+colorize(operand)+"  >>--->  "+colorize(converterAPI.convert(operand,convertTo),convertTo));
+        System.out.println("\t\t\t\t\t"+colorize(operand)+"  >>--->  "+colorize(ConverterAPI.convert(operand,convertTo),convertTo));
     }
 
     private void showMenu(){
